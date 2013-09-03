@@ -4,7 +4,7 @@ import groovy.json.JsonBuilder
 
 class MyMalcomPushService {
 
-    static transaction = false
+    static transactional = false
 
     def connectionClient
     def grailsApplication
