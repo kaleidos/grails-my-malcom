@@ -62,11 +62,12 @@ The full documentation of the MyMalcom API is available at [https://github.com/M
 
 You can send any questions to:
 
-- Iván López: lopez.ivan@gmail.com
+- Iván López: lopez.ivan@gmail.com ([@ilopmar](https://twitter.com/ilopmar))
 
 Collaborations are appreciated :-)
 
 
 ## Release Notes
 
+* 0.1.1 - 03/Sep/2013 - Fix wrong Config.groovy
 * 0.1 - 02/Sep/2013 - Initial version of the plugin with basic support of push notifications.
