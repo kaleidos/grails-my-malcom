@@ -2,6 +2,7 @@ Grails MyMalcom API
 ===================
 
 [![Build Status](https://drone.io/github.com/kaleidos/grails-my-malcom/status.png)](https://drone.io/github.com/kaleidos/grails-my-malcom/latest)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/kaleidos/grails-my-malcom/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 This plugin provides a service to send push notifications to your mobile devices via [MyMalcom](http://www.mymalcom.com/) from your grails application.
 
