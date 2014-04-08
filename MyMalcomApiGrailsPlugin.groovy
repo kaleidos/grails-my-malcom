@@ -1,4 +1,6 @@
 
+import net.kaleidos.mymalcom.PluginSpringBeans
+
 class MyMalcomApiGrailsPlugin {
     // the plugin version
     def version = "0.1.1"
@@ -19,9 +21,7 @@ class MyMalcomApiGrailsPlugin {
     def title = "Grails My Malcom Api Plugin"
     def author = "Iván López"
     def authorEmail = "ivan.lopez@kaleidos.net"
-    def description = '''\
-This plugin provides a service to send push notifications to your mobile devices via MyMalcom (http://www.mymalcom.com) from your grails application.
-'''
+    def description = "This plugin provides a service to send push notifications to your mobile devices via MyMalcom (http://www.mymalcom.com) from your grails application."
 
     // URL to the plugin's documentation
     def documentation = "https://github.com/kaleidos/grails-my-malcom/blob/master/README.md"
@@ -40,24 +40,5 @@ This plugin provides a service to send push notifications to your mobile devices
     // Online location of the plugin's browseable source code.
     def scm = [ url: "https://github.com/kaleidos/grails-my-malcom" ]
 
-    def doWithSpring = {
-        def myMalcomApiConfig = application.config.myMalcom
-
-        if (!myMalcomApiConfig.applicationCode) {
-            log.error "ERROR: MyMalcom API applicationCode not found. The property myMalcom.applicationCode must be defined in Config.groovy"
-        }
-        if (!myMalcomApiConfig.environment || !["SANDBOX", "PRODUCTION"].contains(myMalcomApiConfig.environment)) {
-            log.error "ERROR: MyMalcom API environment not found or not valid. The property myMalcom.environment must be defined in Config.groovy and must be 'SANDBOX' or 'PRODUCTION'"
-        }
-        if (!myMalcomApiConfig.user) {
-            log.error "ERROR: MyMalcom API user not found. The property myMalcom.user must be defined in Config.groovy"
-        }
-        if (!myMalcomApiConfig.password) {
-            log.error "ERROR: MyMalcom API password not found. The property myMalcom.password must be defined in Config.groovy"
-        }
-
-        connectionClient(net.kaleidos.mymalcom.ConnectionClient) {
-            grailsApplication = ref("grailsApplication")
-        }
-    }
+    def doWithSpring = PluginSpringBeans.doWithSpring
 }

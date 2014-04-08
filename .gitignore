@@ -1,5 +1,7 @@
 .classpath
 .project
 .settings
+cobertura.ser
+*.swp
 target/
 plugin.xml

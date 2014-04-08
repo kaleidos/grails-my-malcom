@@ -22,6 +22,35 @@ myMalcom {
 }
 ```
 
+If you have several posible application codes you can use the alternative configuration:
+
+```groovy
+myMalcom {
+    apiUrl = "https://api.mymalcom.com/v3/notification/push"
+
+    clients {
+        android {
+            applicationCode = "App UUID Android identifier in Malcom"
+            environment = "SANDBOX" // or "PRODUCTION"
+            user = "YOUR-USER-ANDROID-API-KEY"
+            password = "YOUR-ANDROID-PASSWORD"
+        }
+        ios {
+            applicationCode = "App UUID iOS identifier in Malcom"
+            environment = "SANDBOX" // or "PRODUCTION"
+            user = "YOUR-USER-IOS-API-KEY"
+            password = "YOUR-IOS-PASSWORD"
+        }
+        otherclient {
+            applicationCode = "App UUID Other Client identifier in Malcom"
+            environment = "SANDBOX" // or "PRODUCTION"
+            user = "YOUR-USER-OTHER-API-KEY"
+            password = "YOUR-OTHER-PASSWORD"
+        }
+    }
+}
+```
+
 ## Send push notification
 
 The plugin provides a service to send the push notification to MyMalcom. All you have to do is to inject the `myMalcomPushService` into your grails artefacts.
@@ -35,6 +64,21 @@ class MyService {
         def message = "The message to send to the device"
 
         myMalcomPushService.sendPushNotification(userDevices, message)
+    }
+}
+```
+
+If multiple clients has been configured you can select one of them as a method argument:
+
+```groovy
+class MyService {
+    def myMalcomPushService
+
+    def sendPushNotification() {
+        def userDevices = ["MY_ANDROID_DEVICE_ID", "MY_IOS_DEVICE_ID"]
+        def message = "The message to send to the device"
+
+        myMalcomPushService.sendPushNotification("ios", userDevices, message)
     }
 }
 ```
@@ -70,5 +114,6 @@ Collaborations are appreciated :-)
 
 ## Release Notes
 
+* 0.2 - 08/Apr/2014 - Added multi-client capabilities
 * 0.1.1 - 03/Sep/2013 - Fix wrong Config.groovy
 * 0.1 - 02/Sep/2013 - Initial version of the plugin with basic support of push notifications.
