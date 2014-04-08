@@ -3,37 +3,42 @@ package net.kaleidos.mymalcom
 import wslite.http.auth.HTTPBasicAuthorization
 import wslite.rest.ContentType
 import wslite.rest.RESTClient
+import org.springframework.beans.factory.InitializingBean
 
-class ConnectionClient {
+@groovy.util.logging.Log4j
+class ConnectionClient implements InitializingBean {
 
     def grailsApplication
 
     private static final String API_URL = "https://api.mymalcom.com/v3/notification/push"
+
+    String url
+    String user
+    String password
+    String clientId
+
     private RESTClient client
 
-    /**
-     * Create the client with the url, user and password
-     *
-     * @return the client to use MyMalcom API
-     */
-    public RESTClient getMyMalcomClient() {
-        if (client == null) {
-            def myMalcomApiConfig = grailsApplication.config.myMalcom
+    void afterPropertiesSet() {
+        def myMalcomApiConfig = grailsApplication.config.myMalcom
 
-            def url = myMalcomApiConfig.apiUrl ?: API_URL
-            def user = myMalcomApiConfig.user ?: ""
-            def password = myMalcomApiConfig.password ?: ""
-
-            client = new RESTClient(url)
-            client.authorization = new HTTPBasicAuthorization(user, password)
+        if (!this.url) {
+            this.url = myMalcomApiConfig.apiUrl ?: API_URL
+        }
+        if (!this.user) {
+            this.user = myMalcomApiConfig.user ?: ""
+        }
+        if (!this.password) {
+            this.password = myMalcomApiConfig.password ?: ""
         }
 
-        return client
+        client = new RESTClient(this.url)
+        client.authorization = new HTTPBasicAuthorization(this.user, this.password)
+
+        log.debug "ConnectionClient succesfully created: ${clientId}"
     }
 
     public boolean sendJson(String json) {
-        RESTClient client = this.getMyMalcomClient()
-
         try {
             client.post() {
                 type ContentType.JSON
